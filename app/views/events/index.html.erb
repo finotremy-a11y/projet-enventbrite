@@ -1,0 +1,47 @@
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Bienvenue sur Eventbrite Remy</h1>
+    <p class="col-md-8 fs-4">
+      Découvre les événements autour de toi, ou crée le tien en un clic.
+    </p>
+
+    <%= link_to "Créer un événement", new_event_path, class: "btn btn-primary btn-lg" %>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="mb-4">Événements disponibles</h2>
+
+  <% if @events.any? %>
+    <div class="row">
+      <% @events.each do |event| %>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+
+            <div class="card-body">
+              <h5 class="card-title"><%= event.title %></h5>
+
+              <p class="card-text">
+                <%= truncate(event.description, length: 100) %>
+              </p>
+
+              <p class="text-muted mb-1">
+                📍 <%= event.location %>
+              </p>
+
+              <p class="text-muted">
+                📅 <%= l(event.start_date, format: :long) %>
+              </p>
+
+              <%= link_to "Voir l'événement", event_path(event), class: "btn btn-outline-primary w-100" %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  <% else %>
+    <p>Aucun événement pour le moment. Sois le premier à en créer un !</p>
+  <% end %>
+</div>

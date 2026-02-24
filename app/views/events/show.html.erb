@@ -1,0 +1,41 @@
+<div class="container mt-4">
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+      <h1 class="card-title mb-3"><%= @event.title %></h1>
+
+      <p class="text-muted">
+        Créé par :
+        <strong><%= @event.admin&.email || "Admin inconnu" %></strong>
+      </p>
+
+      <p><strong>Description :</strong></p>
+      <p><%= simple_format(@event.description) %></p>
+
+      <hr>
+
+      <p><strong>Lieu :</strong> <%= @event.location %></p>
+
+      <p><strong>Date de début :</strong>
+        <%= l(@event.start_date, format: :long) %>
+      </p>
+
+      <p><strong>Date de fin :</strong>
+        <%= l(@event.end_date, format: :long) %>
+      </p>
+
+      <p><strong>Durée :</strong> <%= @event.duration %> minutes</p>
+
+      <p><strong>Prix :</strong> <%= @event.price %> €</p>
+
+      <p><strong>Participants :</strong>
+        <%= @event.attendances.count %>
+      </p>
+
+    </div>
+  </div>
+
+  <%= link_to "Retour à l'accueil", root_path, class: "btn btn-secondary" %>
+
+</div>

@@ -1,0 +1,7 @@
+fr:
+  time:
+    formats:
+      long: "%A %d %B %Y à %H:%M"
+  date:
+    formats:
+      long: "%A %d %B %Y"

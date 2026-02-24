@@ -1,0 +1,40 @@
+<div class="container mt-4">
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+      <h2 class="card-title mb-3">
+        Profil de <%= @user.first_name %> <%= @user.last_name %>
+      </h2>
+
+      <p><strong>Email :</strong> <%= @user.email %></p>
+      <p><strong>Description :</strong> <%= @user.description %></p>
+
+      <%= link_to "Modifier email / mot de passe",
+          edit_user_registration_path,
+          class: "btn btn-outline-primary mt-3" %>
+
+    </div>
+  </div>
+
+  <h3>Événements créés</h3>
+
+  <% if @events.any? %>
+    <div class="row">
+      <% @events.each do |event| %>
+        <div class="col-md-4">
+          <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><%= event.title %></h5>
+              <p class="card-text"><%= truncate(event.description, length: 80) %></p>
+              <%= link_to "Voir l'événement", event_path(event), class: "btn btn-primary w-100" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Aucun événement créé pour le moment.</p>
+  <% end %>
+
+</div>

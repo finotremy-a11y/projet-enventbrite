@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+
+    <%= link_to "Eventbrite Remy", root_path, class: "navbar-brand" %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Liens à gauche -->
+      <ul class="navbar-nav me-auto">
+
+        <li class="nav-item">
+          <%= link_to "Accueil", root_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Créer un événement", new_event_path, class: "nav-link" %>
+        </li>
+
+      </ul>
+
+      <!-- Liens à droite -->
+      <ul class="navbar-nav">
+
+        <% if user_signed_in? %>
+
+          <!-- Dropdown MON PROFIL -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+              href="javascript:void(0)"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              data-turbo="false"
+              aria-expanded="false">
+              Mon profil
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><%= link_to "Mon profil", user_path(current_user), class: "dropdown-item" %></li>
+              <li><%= link_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+            </ul>
+          </li>
+
+        <% else %>
+
+          <!-- Dropdown COMPTE -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+              href="javascript:void(0)"
+              role="button"
+              data-bs-toggle="dropdown"
+              data-turbo="false"
+              aria-expanded="false">
+              Compte
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><%= link_to "S'inscrire", new_user_registration_path, class: "dropdown-item" %></li>
+              <li><%= link_to "Se connecter", new_user_session_path, class: "dropdown-item" %></li>
+            </ul>
+          </li>
+
+        <% end %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
