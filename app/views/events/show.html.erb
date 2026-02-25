@@ -1,41 +1,48 @@
-<div class="container mt-4">
+<h1><%= @event.title %></h1>
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
+<p><strong>Description :</strong> <%= @event.description %></p>
+<p><strong>Date :</strong> <%= @event.start_date.strftime("%d/%m/%Y à %H:%M") %></p>
+<p><strong>Durée :</strong> <%= @event.duration %> minutes</p>
+<p><strong>Lieu :</strong> <%= @event.location %></p>
 
-      <h1 class="card-title mb-3"><%= @event.title %></h1>
+<p>
+  <strong>Prix :</strong>
+  <% if @event.is_free? %>
+    Gratuit 🎉
+  <% else %>
+    <%= number_to_currency(@event.price / 100.0, unit: "€") %>
+  <% end %>
+</p>
 
-      <p class="text-muted">
-        Créé par :
-        <strong><%= @event.admin&.email || "Admin inconnu" %></strong>
-      </p>
+<hr>
 
-      <p><strong>Description :</strong></p>
-      <p><%= simple_format(@event.description) %></p>
+<% if user_signed_in? %>
 
-      <hr>
+  <% if current_user == @event.admin %>
+    <!-- L'organisateur -->
+    <p>Tu es l'organisateur de cet événement.</p>
 
-      <p><strong>Lieu :</strong> <%= @event.location %></p>
+    <%= link_to "Mon espace événement", event_attendances_path(@event), class: "btn btn-secondary" %>
 
-      <p><strong>Date de début :</strong>
-        <%= l(@event.start_date, format: :long) %>
-      </p>
+    <%= link_to "Modifier l'événement", edit_event_path(@event), class: "btn btn-warning" %>
 
-      <p><strong>Date de fin :</strong>
-        <%= l(@event.end_date, format: :long) %>
-      </p>
+    <%= button_to "Supprimer l'événement", event_path(@event), method: :delete, data: { confirm: "Tu es sûr ?" }, class: "btn btn-danger mt-2" %>
 
-      <p><strong>Durée :</strong> <%= @event.duration %> minutes</p>
+  <% elsif @event.attendances.exists?(user: current_user) %>
+    <!-- Déjà participant -->
+    <p class="text-success">Tu participes déjà à cet événement !</p>
 
-      <p><strong>Prix :</strong> <%= @event.price %> €</p>
+  <% else %>
+    <!-- Utilisateur connecté, non admin, non participant -->
+    <% if @event.is_free? %>
+      <%= link_to "Rejoindre l'événement", new_event_attendance_path(@event), class: "btn btn-primary" %>
+    <% else %>
+      <%= link_to "Rejoindre l'événement (paiement)", new_event_attendance_path(@event), class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
 
-      <p><strong>Participants :</strong>
-        <%= @event.attendances.count %>
-      </p>
-
-    </div>
-  </div>
-
-  <%= link_to "Retour à l'accueil", root_path, class: "btn btn-secondary" %>
-
-</div>
+<% else %>
+  <!-- Non connecté -->
+  <p>Tu dois être connecté pour rejoindre cet événement.</p>
+  <%= link_to "Se connecter", new_user_session_path, class: "btn btn-outline-primary" %>
+<% end %>

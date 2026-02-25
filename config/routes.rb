@@ -11,8 +11,18 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   devise_for :users
-  resources :events
   root "events#index"
 
   resources :users, only: [:show]
+
+  resources :events do
+    resources :attendances, only: [:new, :index]
+  end
+
+  resources :attendances, only: [:create] do
+    collection do
+      get :success
+      get :cancel
+    end
+  end
 end

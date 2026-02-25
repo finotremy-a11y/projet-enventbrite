@@ -1,0 +1,24 @@
+<h1>Rejoindre l'événement : <%= @event.title %></h1>
+
+<p><strong>Date :</strong> <%= @event.start_date.strftime("%d/%m/%Y à %H:%M") %></p>
+
+<p>
+  <strong>Prix :</strong>
+  <% if @event.is_free? %>
+    Gratuit !
+  <% else %>
+    <%= number_to_currency(@event.price / 100.0, unit: "€") %>
+  <% end %>
+</p>
+
+<hr>
+
+<% if @event.is_free? %>
+  <p>Cet événement est gratuit. Tu vas être inscrit automatiquement.</p>
+<% else %>
+  <p>Tu vas être redirigé vers Stripe pour finaliser ton paiement.</p>
+
+  <%= button_to "Payer avec Stripe", attendances_path(event_id: @event.id), method: :post, data: { turbo: false }, class: "btn btn-success" %>
+<% end %>
+
+<%= link_to "Retour à l'événement", event_path(@event), class: "btn btn-secondary mt-3" %>

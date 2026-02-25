@@ -13,12 +13,16 @@ class Event < ApplicationRecord
 
   validates :description, presence: true, length: { minimum: 20, maximum: 1000 }
 
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
 
   validates :location, presence: true
 
   def end_date
     start_date + duration.minutes
+  end
+
+  def is_free?
+    price == 0
   end
 
   private

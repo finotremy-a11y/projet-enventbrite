@@ -1,0 +1,30 @@
+<h1>Participants de l'événement : <%= @event.title %></h1>
+
+<p><strong>Date :</strong> <%= @event.start_date.strftime("%d/%m/%Y à %H:%M") %></p>
+<p><strong>Lieu :</strong> <%= @event.location %></p>
+
+<hr>
+
+<h2>Liste des participants</h2>
+
+<% if @attendances.any? %>
+  <ul>
+    <% @attendances.each do |attendance| %>
+      <li>
+        <%= attendance.user.email %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucun participant pour le moment.</p>
+<% end %>
+
+<hr>
+
+<h3>Actions administrateur</h3>
+
+<%= link_to "Modifier l'événement", edit_event_path(@event), class: "btn btn-warning" %>
+
+<%= button_to "Supprimer l'événement", event_path(@event), method: :delete, data: { confirm: "Tu es sûr de vouloir supprimer cet événement ?" }, class: "btn btn-danger mt-2" %>
+
+<%= link_to "Retour à l'événement", event_path(@event), class: "btn btn-secondary mt-3" %>
