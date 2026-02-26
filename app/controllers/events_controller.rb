@@ -60,7 +60,8 @@ class EventsController < ApplicationController
       :title,
       :description,
       :price,
-      :location
+      :location,
+      :photo
     )
   end
 end

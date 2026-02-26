@@ -7,12 +7,20 @@
         Profil de <%= @user.first_name %> <%= @user.last_name %>
       </h2>
 
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "rounded-circle mb-3", style: "width: 80px; height: 80px; object-fit: cover;" %>
+      <% else %>
+        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-3"
+             style="width: 80px; height: 80px; font-size: 2rem; color: white;">
+          <%= (@user.first_name.presence || @user.email).first.upcase %>
+        </div>
+      <% end %>
+
       <p><strong>Email :</strong> <%= @user.email %></p>
       <p><strong>Description :</strong> <%= @user.description %></p>
 
-      <%= link_to "Modifier email / mot de passe",
-          edit_user_registration_path,
-          class: "btn btn-outline-primary mt-3" %>
+      <%= link_to "Modifier mon profil", edit_user_path(@user), class: "btn btn-primary mt-3" %>
+      <%= link_to "Modifier email / mot de passe", edit_user_registration_path, class: "btn btn-outline-secondary mt-3 ms-2" %>
 
     </div>
   </div>

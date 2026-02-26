@@ -1,5 +1,9 @@
 <h1><%= @event.title %></h1>
 
+<% if @event.photo.attached? %>
+  <%= image_tag @event.photo, class: "img-fluid mb-3", alt: @event.title %>
+<% end %>
+
 <p><strong>Description :</strong> <%= @event.description %></p>
 <p><strong>Date :</strong> <%= @event.start_date.strftime("%d/%m/%Y à %H:%M") %></p>
 <p><strong>Durée :</strong> <%= @event.duration %> minutes</p>
@@ -10,7 +14,7 @@
   <% if @event.is_free? %>
     Gratuit 🎉
   <% else %>
-    <%= number_to_currency(@event.price / 100.0, unit: "€") %>
+    <%= number_to_currency(@event.price, unit: "€", format: "%n %u") %>
   <% end %>
 </p>
 

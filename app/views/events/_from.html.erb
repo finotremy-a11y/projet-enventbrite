@@ -1,0 +1,8 @@
+<%= form_with model: @event, local: true, html: { multipart: true } do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :photo, "Photo de l'événement" %>
+    <%= f.file_field :photo, class: "form-control", required: true %>
+  </div>
+
+<% end %>
